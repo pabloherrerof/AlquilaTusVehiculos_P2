@@ -10,8 +10,8 @@ import java.util.Date;
 public class Alquiler {
     @Id
     private String alquilerId;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private String fechaInicio;
+    private String fechaFin;
     private double importe;
     private String clienteId;
     private String vehiculoId;
@@ -46,7 +46,7 @@ public class Alquiler {
         // Constructor por defecto
     }
 
-    public Alquiler(Date fechaInicio, Date fechaFin, double importe, String clienteId, String vehiculoId) {
+    public Alquiler(String fechaInicio, String fechaFin, double importe, String clienteId, String vehiculoId) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.importe = importe;
@@ -72,19 +72,19 @@ public class Alquiler {
         this.alquilerId = alquilerId;
     }
 
-    public Date getFechaInicio() {
+    public String getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public String getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(String fechaFin) {
         this.fechaFin = fechaFin;
     }
 

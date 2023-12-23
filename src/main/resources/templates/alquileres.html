@@ -11,153 +11,81 @@
 <header th:insert="~{fragments/navbar :: navbar}"></header>
 
 <main class="layout">
+    <button th:if="${#authorization.expression('hasRole(''USUARIO'')')}" id="btnCrearAlquiler" class="btnCrear">+</button>
+    <h1 th:if="${#authorization.expression('hasRole(''USUARIO'')')}">Mis Alquileres</h1>
     <section class="alquileresContainer">
-        <div class="alquilerCard">
+
+        <div th:each="alquiler : ${listaAlquileres}" class="alquilerCard">
             <div class="vehiculoInfoContainer">
-                <img>
                 <div class="vehiculoInfo">
                     <div class="vehiculoInfoItem">
                         <h2>ID:</h2>
-                        <p>1</p>
+                        <p th:text="${alquiler.alquilerId}"></p>
                     </div>
                     <div class="vehiculoInfoItem">
-                        <h2>Marca:</h2>
-                        <p>Toyota</p>
+                        <h2>Fecha Inicio:</h2>
+                        <p th:text="${alquiler.fechaInicio}"></p>
                     </div>
                     <div class="vehiculoInfoItem">
-                        <h2>Matrícula:</h2>
-                        <p>Corolla</p>
+                        <h2>Fecha Fin:</h2>
+                        <p th:text="${alquiler.fechaFin}"></p>
                     </div>
                     <div class="vehiculoInfoItem">
-                        <h2>Color:</h2>
-                        <p>Rojo</p>
+                        <h2>Importe:</h2>
+                        <p th:text="${alquiler.importe}"></p>
                     </div>
                     <div class="vehiculoInfoItem">
-                        <h2>Capacidad:</h2>
-                        <p>200L</p>
+                        <h2>Vehiculo Id:</h2>
+                        <p th:text="${alquiler.vehiculoId}"></p>
                     </div>
-                </div>
-            </div>
-            <div class="clienteInfoContainer">
-                <img>
-                <div class="clienteInfo">
-                    <div class="clienteInfoItem">
-                        <h2>ID:</h2>
-                        <p>1</p>
-                    </div>
-                    <div class="clienteInfoItem">
-                        <h2>Nombre:</h2>
-                        <p>Toyota</p>
-                    </div>
-                    <div class="clienteInfoItem">
-                        <h2>Email:</h2>
-                        <p>Rojo</p>
-                    </div>
-                    <div class="clienteInfoItem">
-                        <h2>Teléfono:</h2>
-                        <p>Rojo</p>
+                    <div class="vehiculoInfoItem">
+                        <h2>Cliente Id:</h2>
+                        <p th:text="${alquiler.clienteId}"></p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="alquilerCard">
-            <div class="vehiculoInfoContainer">
-                <img>
-                <div class="vehiculoInfo">
-                    <div class="vehiculoInfoItem">
-                        <h2>ID:</h2>
-                        <p>1</p>
-                    </div>
-                    <div class="vehiculoInfoItem">
-                        <h2>Marca:</h2>
-                        <p>Toyota</p>
-                    </div>
-                    <div class="vehiculoInfoItem">
-                        <h2>Matrícula:</h2>
-                        <p>Corolla</p>
-                    </div>
-                    <div class="vehiculoInfoItem">
-                        <h2>Color:</h2>
-                        <p>Rojo</p>
-                    </div>
-                    <div class="vehiculoInfoItem">
-                        <h2>Capacidad:</h2>
-                        <p>200L</p>
-                    </div>
-                </div>
-            </div>
-            <div class="clienteInfoContainer">
-                <img>
-                <div class="clienteInfo">
-                    <div class="clienteInfoItem">
-                        <h2>ID:</h2>
-                        <p>1</p>
-                    </div>
-                    <div class="clienteInfoItem">
-                        <h2>Nombre:</h2>
-                        <p>Toyota</p>
-                    </div>
-                    <div class="clienteInfoItem">
-                        <h2>Email:</h2>
-                        <p>Rojo</p>
-                    </div>
-                    <div class="clienteInfoItem">
-                        <h2>Teléfono:</h2>
-                        <p>Rojo</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="alquilerCard">
-            <div class="vehiculoInfoContainer">
-                <img>
-                <div class="vehiculoInfo">
-                    <div class="vehiculoInfoItem">
-                        <h2>ID:</h2>
-                        <p>1</p>
-                    </div>
-                    <div class="vehiculoInfoItem">
-                        <h2>Marca:</h2>
-                        <p>Toyota</p>
-                    </div>
-                    <div class="vehiculoInfoItem">
-                        <h2>Matrícula:</h2>
-                        <p>Corolla</p>
-                    </div>
-                    <div class="vehiculoInfoItem">
-                        <h2>Color:</h2>
-                        <p>Rojo</p>
-                    </div>
-                    <div class="vehiculoInfoItem">
-                        <h2>Capacidad:</h2>
-                        <p>200L</p>
-                    </div>
-                </div>
-            </div>
-            <div class="clienteInfoContainer">
-                <img>
-                <div class="clienteInfo">
-                    <div class="clienteInfoItem">
-                        <h2>ID:</h2>
-                        <p>1</p>
-                    </div>
-                    <div class="clienteInfoItem">
-                        <h2>Nombre:</h2>
-                        <p>Toyota</p>
-                    </div>
-                    <div class="clienteInfoItem">
-                        <h2>Email:</h2>
-                        <p>Rojo</p>
-                    </div>
-                    <div class="clienteInfoItem">
-                        <h2>Teléfono:</h2>
-                        <p>Rojo</p>
-                    </div>
-                </div>
+        <div id="modalFormulario" class="modal" th:if="${#authorization.expression('hasRole(''USUARIO'')')}">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="formularioAlquiler" th:action="@{/usuarios/alquileres}" method="post">
+                    <h1>Añadir alquiler:</h1>
+                    <label for="fechaInicio">Fecha Inicio:</label>
+                    <input type="date" name="fechaInicio" placeholder="Fecha Inicio" required id="fechaInicio">
+                    <label for="fechaFin">Fecha Fin:</label>
+                    <input type="date" name="fechaFin" placeholder="Fecha Fin" required id="fechaFin">
+                    <input type="number" name="importe" placeholder="Importe" required>
+                    <select name="vehiculoId" id="vehiculoId">
+                        <option id="option" th:each="vehiculo : ${listaVehiculos}" th:value="${vehiculo.vehiculoId}" th:text="${vehiculo.vehiculoId}"></option>
+                    </select>
+                    <button class="btnSave" type="submit">Guardar Alquiler</button>
+                </form>
             </div>
         </div>
     </section>
 </main>
 
 </body>
+<script>
+    var modal = document.getElementById("modalFormulario");
+    var btn = document.getElementById("btnCrearAlquiler");
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
+
 </html>
+
